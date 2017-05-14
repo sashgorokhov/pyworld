@@ -1,1 +1,39 @@
-foo: bar
+logging:
+  config:
+    version: 1
+    formatters:
+      default:
+        class: logging.Formatter
+        format: "[%(asctime)s] [%(name)s] [%(levelname)s] %(message)s"
+        datefmt: "%d.%m.%y %H:%M:%S"
+    handlers:
+      console:
+        class: logging.StreamHandler
+        level: INFO
+        formatter: default
+      file:
+        class: logging.FileHandler
+        filename: ${join(BASE_DIR, 'log.txt')}
+        mode: w
+        level: DEBUG
+        formatter: default
+    loggers:
+      pyworld:
+        handlers: [file, console]
+        level: DEBUG
+      __main__:
+        handlers: [file, console]
+        level: DEBUG
+      root:
+        handlers: [console]
+        level: WARNING
+
+data_dir: ${join(BASE_DIR, 'data')}
+
+
+windows:
+  fps_limit: 30
+  default:
+    width: 800
+    height: 600
+    caption: Hello, world!
