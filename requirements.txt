@@ -2,3 +2,4 @@ pygame
 metayaml
 pillow
 noise
+argparse-autogen

@@ -77,8 +77,14 @@ class Size(Base):
         return '({0.w}, {0.h})'.format(self)
 
 
+# TODO: Implement
 @auto_representer
-class Rect(Base):
+class Polygon(Base):
+    pass
+
+
+@auto_representer
+class Rect(Polygon):
     topleft = None
     topright = None
     bottomright = None
@@ -125,8 +131,17 @@ class Rect(Base):
     def corner(self):
         return self.bottomright
 
+    @property
+    def width(self):
+        return abs(self.topleft.x - self.topright.x)
+
+    @property
+    def height(self):
+        return abs(self.topleft.y - self.bottomleft.y)
+
+    @property
     def size(self):
-        raise NotImplementedError  # TODO
+        return Size(self.width, self.height)
 
     def tuple(self):
         return self.topleft, self.topright, self.bottomright, self.bottomleft
@@ -134,3 +149,14 @@ class Rect(Base):
     def flat(self):
         for p in self.tuple():
             yield p.tuple()
+
+    def walk(self):
+        for x in range(self.width):
+            for y in range(self.height):
+                yield Point(x, y)
+
+
+# TODO: Implement
+@auto_representer
+class Box(Rect):
+    pass
